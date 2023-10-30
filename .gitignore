@@ -396,3 +396,6 @@ FodyWeavers.xsd
 
 # JetBrains Rider
 *.sln.iml
+
+# Project Specific
+CSCI 2210 - Project 3 - Warehouse Simulation.docx
