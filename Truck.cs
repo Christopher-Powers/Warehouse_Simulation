@@ -1,4 +1,6 @@
 ﻿
+using System.Threading.Channels;
+
 namespace WarehouseSimulation
 {
     /// <summary>
@@ -102,6 +104,22 @@ namespace WarehouseSimulation
             Crate unloadedCrate = trailer.Pop();
 
             return unloadedCrate;
+        }
+
+        public override string ToString()
+        {
+            string trailerString = "";
+            foreach (Crate crate in trailer)
+            {
+                trailerString += crate.ToString() + "\n";
+            }
+
+            string truckString = $"{driverName}\n" +
+                                    $"{deliveryCompany}\n" +
+                                    $"{trailerString}\n" +
+                                    "===============================";
+
+            return truckString;
         }
 
     }

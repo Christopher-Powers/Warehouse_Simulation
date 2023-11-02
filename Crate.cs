@@ -44,5 +44,9 @@ namespace WarehouseSimulation
             return shortendId;
         }
 
+        public override string ToString()
+        {
+            return $"Id = {Id}, Price = {price}";
+        }
     }
 }
