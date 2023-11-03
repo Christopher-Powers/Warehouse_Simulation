@@ -10,7 +10,6 @@ namespace WarehouseSimulation
     {
         public string? driverName {  get; set; }
         public string? deliveryCompany {  get; set; }
-        public bool isEmpty { get; set;}
 
         public Stack<Crate> trailer = new Stack<Crate>();
 
@@ -23,7 +22,6 @@ namespace WarehouseSimulation
             driverName = GetRandomName();
             deliveryCompany = GetRandomCompany();
             trailer = GetRandomTrailer();
-            isEmpty = GetIsEmpty();
         }
 
         /// <summary>
@@ -59,7 +57,10 @@ namespace WarehouseSimulation
             return deliveryCompanies[random.Next(deliveryCompanies.Length)];
         }
 
-        //Need to document
+        /// <summary>
+        /// Randomizes the number of crates added to the trucks trailer.
+        /// </summary>
+        /// <returns></returns>
         public Stack<Crate> GetRandomTrailer()
         {
             Random random = new Random();
@@ -74,6 +75,10 @@ namespace WarehouseSimulation
             return stackOfCrates;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         public bool GetIsEmpty()
         {
             if(trailer.Count <= 0)

@@ -1,10 +1,16 @@
 ﻿
 namespace WarehouseSimulation
 {
+    /// <summary>
+    /// The dock class represents a single loading dock in within the warehouse.
+    /// It manages a queue of trucks that are waiting to be unloaded.  It has
+    /// various properties that aid in track statistics about the dock and its
+    /// efficency.
+    /// </summary>
     internal class Dock
     {
-        public string? Id { get; set; }
-        public double? totalSales { get; set; }
+        public string Id { get; set; }
+        public double totalSales { get; set; }
         public int totalCrates { get; set; }
         public int totalTrucks { get; set; }
         public int timeInUse { get; set; }
@@ -12,6 +18,10 @@ namespace WarehouseSimulation
 
         public Queue<Truck> line;
 
+        /// <summary>
+        /// Dock constructor to initializes all properties to a zero or null value
+        /// to be determined in Warehouse.
+        /// </summary>
         public Dock()
         {
             Id = GetUniqueId();
@@ -45,6 +55,10 @@ namespace WarehouseSimulation
             return null;
         }
 
+        /// <summary>
+        /// Gets a unique ID for the Dock
+        /// </summary>
+        /// <returns>Unique ID string</returns>
         public string GetUniqueId()
         {
             string uniqueId = Guid.NewGuid().ToString("N");
@@ -52,12 +66,16 @@ namespace WarehouseSimulation
             return shortendId;
         }
 
+        /// <summary>
+        /// Overidden ToString to print Dock properties
+        /// </summary>
+        /// <returns>Dock properties string</returns>
         public override string ToString()
         {
             string truckString = "";
-            foreach(Truck truck in line)
+            foreach (Truck truck in line)
             {
-                truckString += ">>" + truck.ToString() +",\n";
+                truckString += ">>" + truck.ToString() + ",\n";
             }
 
             return $"Dock Id: {Id}\n" +

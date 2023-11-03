@@ -1,86 +1,71 @@
-# CSCI 2210 – Data Structures
-## Project 3 – Warehouse Simulation Activity
+# Warehouse Simulation Project
 
-### Overview
-In this assignment, you will demonstrate your understanding and proficiency in the data structures we have discussed in this class up to this point: arrays, lists, stacks, queues, and priority queues. 
+## Overview
 
-### Procedure
-1. **Prerequisites:**
-   - Visual Studio 2022
-   - Access to a Github account
+The Warehouse Simulation project is a C# console application that simulates the operation of a warehouse with multiple loading docks. It models the arrival and processing of trucks carrying crates of goods over a period of 48 discrete time increments.
 
-### Part 1: The Situation
-You have been contracted by a local company about to build a new warehouse processing center. The main task is to develop simulations of the warehouse to assist in determining its necessary capacity. The company aims to identify the optimum number of docks required to maximize total revenue.
+The goal of the simulation is to help a company determine the optimal number of loading docks for their new warehouse to maximize revenue, considering the costs of dock operations.
 
-Details of the simulation are as follows:
+## Features
 
-- Trucks arrive with random cargo crates loaded into their trailers.
-- Each truck’s trailer contains a random number of crates.
-- Each truck arrives at a random time across 48 discrete time increments.
-- Trailers are loaded in a manner where the first crate placed into the trailer is the last one to leave.
-- On arriving at the warehouse, trucks are directed to a gate entrance for further processing.
-- Every time increment, a truck can be added to a loading dock.
-- At a loading dock, a truck can have one crate unloaded per time increment. Once emptied, it's immediately replaced by the next truck in line for that dock.
+- Simulates truck arrivals with random cargo crates.
+- Processes loading and unloading of crates at multiple docks.
+- Tracks dock usage and generates a detailed performance report.
+- Outputs a CSV log of crate unloading events.
+- Offers a configurable number of docks for multiple simulation scenarios.
 
-> **Note:** Each dock costs approximately $100 to operate per time increment.
+## Installation
 
-Post simulation, the system should generate a comprehensive report detailing:
+1. Ensure you have Visual Studio 2022 installed.
+2. Clone the repository to your local machine using Git:
 
-- Number of docks open during the simulation
-- Longest line at any loading dock during the simulation
-- Total trucks processed during the simulation
-- Total crates unloaded during the simulation
-- Total value of the crates that were unloaded
-- Average value of each crate and truck unloaded
-- Total time docks were in use/not in use
-- Total cost of operating each dock
-- Overall revenue of the warehouse (total value of crates – total operating cost)
+    ```
+    git clone [https://github.com/Christopher-Powers/Warehouse_Simulation]
+    ```
 
-### Part 2: Creating Classes 
-This project comprises four primary classes: `Crate.cs`, `Truck.cs`, `Dock.cs`, and `Warehouse.cs`. 
+3. Open the `.sln` file with Visual Studio 2022.
 
-- **The Crate Class**
-  - Represents a single shipment inside of a truck.
-  - Properties: `Id`, `Price` (ranging from $50 to $500)
+## Running the Simulation
 
-- **The Truck Class**
-  - Represents a single truck at the loading dock.
-  - Properties: `driver`, `deliveryCompany`, `Trailer` (a stack of crates)
-  - Methods: `Load(Crate crate)`, `Unload()`
+To run the simulation:
 
-- **The Dock Class**
-  - Represents an individual warehouse loading dock.
-  - Properties include `Id`, `Line` (queue of trucks), `TotalSales`, `TotalCrates`, `TotalTrucks`, `TimeInUse`, `TimeNotInUse`
-  - Methods: `JoinLine(Truck truck)`, `SendOff()`
+1. Build the solution in Visual Studio.
+2. Run the application. The console will display the simulation logs in real-time.
+3. Once the simulation is complete, a summary report will be displayed in the console and written to a CSV file.
 
-- **The Warehouse Class**
-  - Represents the entire warehouse facility and manages the warehouse simulation.
-  - Properties: `Docks` (List of docks with a maximum limit of 15), `Entrance` (queue of trucks), and other necessary properties for the simulation.
-  - Methods: `Run()` and other required methods to execute the simulation.
+## Simulation Report
 
-### Part 3: Running the Simulation
-While executing the simulation, each crate, as it's unloaded from the truck, should be logged into a CSV file detailing:
+Upon completion, the simulation generates a report containing:
 
-- Time increment of unloading
-- Truck driver’s name
-- Delivery company’s name
-- Crate’s identification number
-- Crate’s value 
-- Status (based on three possible scenarios)
+- Number of docks open during the simulation.
+- Longest line at any loading dock during the simulation.
+- Total number of trucks processed.
+- Total number of crates unloaded.
+- Total and average value of crates unloaded.
+- Dock utilization statistics.
+- Total revenue and operating costs.
 
-### Part 4: Modifying the Simulation
-Participants can choose one of two modifications:
+## Modifying the Simulation
 
-1. Update the simulation to consider non-uniform truck arrivals throughout the day.
-2. Incorporate a visual aid, animation, or GUI to display the simulation in progress.
+You can modify the simulation by:
 
-### Part 5: Offer a Recommendation
-After multiple simulations with varying dock quantities, provide a concise recommendation on the number of docks the company should construct for their new warehouse.
+- Adjusting the number of docks in the `Warehouse` constructor.
+- Changing the crate and truck generation logic to simulate different traffic patterns.
+- Implementing an optional graphical interface to visualize the simulation.
 
-### Part 6: Submit
-Ensure all project files are hosted on a public GitHub repository. Include:
+## Recommendation Summary
 
-- Your recommendation summary
-- All project-related files (`.sln`, `.csproj`, `.cs`, etc.)
+After running the simulation with different configurations, a summary of recommendations will be provided based on the performance outcomes to guide the company on the number of docks to implement in their new warehouse.
 
-Finally, submit the GitHub repository link to the dropbox on D2L.
+## Contributing
+
+Contributions to the project are welcome. Please follow the standard fork, branch, and pull request workflow.
+
+## License
+
+This project is open-sourced under the MIT license. See the [LICENSE](LICENSE) file for details.
+
+## Contact
+
+For questions or support, please contact [powersct@etsu.edu].
+

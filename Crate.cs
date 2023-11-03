@@ -5,9 +5,10 @@ namespace WarehouseSimulation
     /// Represent a Crate with an Id and price.
     /// </summary>
     internal class Crate
-    { 
+    {
         public string? Id { get; set; }
-        public double? price { get; set; }
+        public double price { get; set; }
+        public int incrimentWhenUnloaded { get; set; }
 
         /// <summary>
         /// Represents a crate with an Id and price.
@@ -16,6 +17,7 @@ namespace WarehouseSimulation
         {
             Id = GetUniqueId();
             price = GetRandomDouble(50, 500);
+            incrimentWhenUnloaded = 0;
         }
 
         /// <summary>
@@ -44,6 +46,10 @@ namespace WarehouseSimulation
             return shortendId;
         }
 
+        /// <summary>
+        /// Overidden ToString to print properties
+        /// </summary>
+        /// <returns>Crate properties in a string</returns>
         public override string ToString()
         {
             return $"Id = {Id}, Price = {price}";
