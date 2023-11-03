@@ -1,13 +1,13 @@
 ﻿///////////////////////////////////////////////////////////////////////////////
-//																			 //		
-// Authors: Justin Gun, GUNJC@etsu.edu										 //
-//			Dustin Sway, ZDCS16@etsu.edu									 //
-//			Chris Powers, powersct@etsu.edu									 //
-// Course: CSCI-2210-001 - Data Structures									 //
-// Assignment: Project 3													 //
-// Description: Warehouse Simulation - Optimize cost efficency			     //
-//																			 //
-//																			 //
+//																			 	
+// Authors: Justin Gun, GUNJC@etsu.edu										 
+//			Dustin Sway, ZDCS16@etsu.edu									 
+//			Chris Powers, powersct@etsu.edu									 
+// Course: CSCI-2210-001 - Data Structures									 
+// Assignment: Project 3													 
+// Description: Warehouse Simulation - Optimize cost efficency			     
+//																			 
+//																			 
 ///////////////////////////////////////////////////////////////////////////////
 
 namespace WarehouseSimulation
