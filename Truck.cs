@@ -34,9 +34,9 @@ namespace WarehouseSimulation
             string[] fakeNames = new string[]
             {
                 "John Smith", "Sarah Johnson", "Michael Brown", "Emily Davis", "David Wilson",
-                "Jennifer Lee", "Robert Anderson", "Mary Jones", "William Martinez", "Susan Taylor",
+                "Jennifer Lee", "Robert Anderson", "Mary Jones", "William Martin", "Susan Taylor",
                 "James Clark", "Karen White", "Joseph Harris", "Lisa Miller", "Richard Turner",
-                "Patricia Moore", "Thomas Walker", "Linda Hall", "Christopher Young", "Nancy King"
+                "Patricia Moore", "Thomas Walker", "Linda Hall", "Christ Almighty", "Nancy King"
             };
             return fakeNames[random.Next(fakeNames.Length)];
         }
@@ -50,9 +50,9 @@ namespace WarehouseSimulation
             Random random = new Random();
             string[] deliveryCompanies = new string[]
             {
-                "United Parcel Service (UPS)","FedEx","United States Postal Service (USPS)",
+                "UPS","FedEx","USPS", "FleetFulfil", 
                 "DHL Express","Amazon Logistics","Walmart Delivery","FedEx Ground",
-                "United Parcel Service Freight (UPSF)","OnTrac","USF Reddaway"
+                "UPSF","OnTrac","USF Reddaway"
             };
             return deliveryCompanies[random.Next(deliveryCompanies.Length)];
         }

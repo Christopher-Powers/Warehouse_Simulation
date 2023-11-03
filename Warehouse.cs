@@ -44,6 +44,7 @@ namespace WarehouseSimulation
         /// </summary>
         public void Run()
         {
+            //Runs simulation, incremementing based on time and if the warehouse is empty
             for (int increment = 0; increment < SIMULATIONTIME || isWarehouseEmpty;  increment++)
             {
                 HandleTruckArrivals();
@@ -78,27 +79,27 @@ namespace WarehouseSimulation
                         string scenario;
                         if (currentTruck.trailer.Count > 0)
                         {
-                            scenario = "A crate was unloaded, but the truck still has more crates to unload.";
+                            scenario = "Crate unloaded, truck still contains crates.";
                         }
                         else if (dock.line.Count > 1)
                         {
-                            scenario = "A crate was unloaded, and the truck has no more crates to " +
-                                       "unload, and another truck is already in the Dock.";
+                            scenario = "Crate unloaded, truck empty. New truck docked.";
                         }
                         else
                         {
-                            scenario = "A crate was unloaded, and the truck has no more crates to " +
-                                       "unload, but another truck is NOT already in the Dock.";
+                            scenario = "Crate unloaded, truck empty. Dock empty.";
                         }
 
                         // Log the details
-                        string logEntry = $"Time Increment: {currentIncrement}, " +
-                                          $"Driver: {currentTruck.driverName}, " +
-                                          $"Delivery Company: {currentTruck.deliveryCompany}, " +
-                                          $"Crate ID: {crate.Id}, " +
-                                          $"Crate Value: ${crate.price}, " +
-                                          $"Scenario: {scenario}";
+                        string logEntry = string.Format("{0,-5} | {1,-15} | {2,-16} | {3,-10} | {4,-11:C} | {5}",
+                                currentIncrement,
+                                currentTruck.driverName,
+                                currentTruck.deliveryCompany,
+                                crate.Id,
+                                crate.price,
+                                scenario);
                         logs.Add(logEntry);
+
 
                         dock.totalSales += crate.price;
                         dock.totalCrates++;
@@ -147,24 +148,11 @@ namespace WarehouseSimulation
         public void HandleTruckArrivals()
         {
             //Change out RandomlyGenerateTruck to a binomial distributed function
-            var truck = RandomlyGenerateTruck();
+            Truck truck = new Truck();
+            //var truck = RandomlyGenerateTruck();
             entrance.Enqueue(truck);
         }
 
-        // Get rid of this method --> merge with HandleTruckArrival
-        // to reduce coupling.  Handle binomial distribution their.
-        public Truck RandomlyGenerateTruck()
-        {
-            //Random random = new Random();
-            //int chance = random.Next(0, 100);
-
-            //if (chance > 50)
-            //{
-            Truck truck = new Truck();
-            return truck;
-            //}
-            //return null;
-        }
 
         /// <summary>
         /// Checks if each dock and the entrance is empty.
@@ -200,7 +188,7 @@ namespace WarehouseSimulation
             int longestLine = docks.Max(d => d.line.Count);
 
             //Print out the report
-            Console.WriteLine("------ Warehouse Simulation Report ------");
+            Console.WriteLine("------ Warehouse Simulation Report-------");
             Console.WriteLine($"Number of docks open: {docks.Count}");
             Console.WriteLine($"Longest line at any dock: {longestLine}");
             Console.WriteLine($"Total number of trucks processed: {totalTrucksProcessed}");
@@ -215,13 +203,20 @@ namespace WarehouseSimulation
             Console.WriteLine($"Total revenue: ${totalRevenue}");
             Console.WriteLine("-----------------------------------------");
 
-            //Print out logs
-            Console.WriteLine("--------- Crate Unloading Logs ----------");
+            //Print out logs in a tabular format
+            Console.WriteLine("------------------------------- Crate Unloading Logs ------------------------------------");
+            Console.WriteLine("{0,-5} | {1,-15} | {2,-16} | {3,-10} | {4,-9} | {5}",
+                              "Time", "Driver", "Delivery Company", "Crate ID", "Crate Value", "Scenario");
+            Console.WriteLine(new string('-', 95)); // Adjust the number of '-' to match the header's width.
+
             foreach (string log in logs)
             {
+                // We will assume that log is a plain string formatted similarly to what was provided previously
                 Console.WriteLine(log);
             }
-            Console.WriteLine("-----------------------------------------");
+
+            Console.WriteLine("-------------------------------------------------------------------------------");
+
         }
     }
 }
