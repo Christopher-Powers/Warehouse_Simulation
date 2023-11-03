@@ -33,6 +33,7 @@ namespace WarehouseSimulation
 
             Warehouse warehouse = new Warehouse();
             warehouse.Run();
+            Console.ReadLine();
         }
     }
 }

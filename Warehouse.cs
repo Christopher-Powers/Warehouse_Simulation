@@ -16,8 +16,9 @@ namespace WarehouseSimulation
         Queue<Truck> entrance;
         private List<string> logs;
         private const int SIMULATIONTIME = 48;
-        private const int MAXDOCKS = 6;
+        private const int MAXDOCKS = 5;
         private bool isWarehouseEmpty;
+        private int longestLineEver;
 
         /// <summary>
         /// Default constructor initializing properties.
@@ -28,6 +29,7 @@ namespace WarehouseSimulation
             entrance = new Queue<Truck>();
             logs = new List<string>();
             isWarehouseEmpty = GetIsWarehouseEmpty();
+            longestLineEver = 0;
 
             // Initialize docks
             for (int i = 0; i < MAXDOCKS; i++)
@@ -145,6 +147,11 @@ namespace WarehouseSimulation
                 {
                     break; // No more docks available or they are all full
                 }
+                int currentLongestLine = docks.Max(d => d.line.Count);
+                if (currentLongestLine > longestLineEver)
+                {
+                    longestLineEver = currentLongestLine;
+                }
             }
         }
 
@@ -153,9 +160,8 @@ namespace WarehouseSimulation
         // them up at entrance.
         public void HandleTruckArrivals()
         {
-            //Change out RandomlyGenerateTruck to a binomial distributed function
+            
             Truck truck = new Truck();
-            //var truck = RandomlyGenerateTruck();
             entrance.Enqueue(truck);
         }
 
