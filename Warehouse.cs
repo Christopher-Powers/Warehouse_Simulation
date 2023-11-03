@@ -16,7 +16,7 @@ namespace WarehouseSimulation
         Queue<Truck> entrance;
         private List<string> logs;
         private const int SIMULATIONTIME = 48;
-        private const int MAXDOCKS = 15;
+        private const int MAXDOCKS = 6;
         private bool isWarehouseEmpty;
 
         /// <summary>
@@ -91,8 +91,13 @@ namespace WarehouseSimulation
                         }
 
                         // Log the details
+                        DateTime startTime = new DateTime(1, 1, 1, 9, 0, 0); // Workday starts at 9:00 AM
+                        DateTime currentTime = startTime.AddMinutes(currentIncrement * 10);
+                        string formattedTime = currentTime.ToString("hh:mm tt");
+
+
                         string logEntry = string.Format("{0,-5} | {1,-15} | {2,-16} | {3,-10} | {4,-11:C} | {5}",
-                                currentIncrement,
+                                formattedTime,
                                 currentTruck.driverName,
                                 currentTruck.deliveryCompany,
                                 crate.Id,
@@ -100,7 +105,7 @@ namespace WarehouseSimulation
                                 scenario);
                         logs.Add(logEntry);
 
-
+                        // Handle truck properties
                         dock.totalSales += crate.price;
                         dock.totalCrates++;
                         dock.timeInUse++;
@@ -108,6 +113,7 @@ namespace WarehouseSimulation
                         // Truck is now empty
                         if (currentTruck.trailer.Count == 0) 
                         {
+                            dock.totalTrucks++;
                             dock.SendOff();
                         }
                     }
@@ -129,7 +135,7 @@ namespace WarehouseSimulation
             // Trucks go to the shortest line.
             while (entrance.Count > 0)
             {
-                Dock shortestDock = docks.OrderBy(d => d.line.Count).FirstOrDefault();
+                Dock? shortestDock = docks.OrderBy(d => d.line.Count).FirstOrDefault();
                 if (shortestDock != null)
                 {
                     Truck truck = entrance.Dequeue();
@@ -205,7 +211,7 @@ namespace WarehouseSimulation
 
             //Print out logs in a tabular format
             Console.WriteLine("------------------------------- Crate Unloading Logs ------------------------------------");
-            Console.WriteLine("{0,-5} | {1,-15} | {2,-16} | {3,-10} | {4,-9} | {5}",
+            Console.WriteLine("{0,-8} | {1,-15} | {2,-16} | {3,-10} | {4,-9} | {5}",
                               "Time", "Driver", "Delivery Company", "Crate ID", "Crate Value", "Scenario");
             Console.WriteLine(new string('-', 95)); // Adjust the number of '-' to match the header's width.
 

@@ -36,7 +36,9 @@ namespace WarehouseSimulation
                 "John Smith", "Sarah Johnson", "Michael Brown", "Emily Davis", "David Wilson",
                 "Jennifer Lee", "Robert Anderson", "Mary Jones", "William Martin", "Susan Taylor",
                 "James Clark", "Karen White", "Joseph Harris", "Lisa Miller", "Richard Turner",
-                "Patricia Moore", "Thomas Walker", "Linda Hall", "Christ Almighty", "Nancy King"
+                "Patricia Moore", "Thomas Walker", "Linda Hall", "Christ Almighty", "Nancy King",
+                "Dixon Knutz", "Cosmo McGee", "Tanjiro Kamado", "Muzan Kibutsuji", "Satoru Gojo",
+                "Yuji Itadori", "Eren Yager", "Mikasa Ackerman", "Armin Arlert" 
             };
             return fakeNames[random.Next(fakeNames.Length)];
         }
