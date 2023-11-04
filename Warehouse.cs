@@ -8,7 +8,7 @@ namespace WarehouseSimulation
     /// The Warehouse class represent a warehouse with an entrance queue of trucks
     /// that are fed into a dock line queue.  This class handles the majority of the
     /// functionality by handling the truck arrivals, assigning the trucks to docks and
-    /// processing them once they are at the dock.  
+    /// processing them once they are at the dock.
     /// </summary>
     internal class Warehouse
     {
@@ -16,9 +16,8 @@ namespace WarehouseSimulation
         Queue<Truck> entrance;
         private List<string> logs;
         private const int SIMULATIONTIME = 48;
-        private const int MAXDOCKS = 5;
+        private const int MAXDOCKS = 2;
         private bool isWarehouseEmpty;
-        private int longestLineEver;
 
         /// <summary>
         /// Default constructor initializing properties.
@@ -29,7 +28,7 @@ namespace WarehouseSimulation
             entrance = new Queue<Truck>();
             logs = new List<string>();
             isWarehouseEmpty = GetIsWarehouseEmpty();
-            longestLineEver = 0;
+
 
             // Initialize docks
             for (int i = 0; i < MAXDOCKS; i++)
@@ -49,7 +48,7 @@ namespace WarehouseSimulation
             //Runs simulation, incremementing based on time and if the warehouse is empty
             for (int increment = 0; increment < SIMULATIONTIME || isWarehouseEmpty;  increment++)
             {
-                HandleTruckArrivals();
+                HandleTruckArrivals(increment);
 
                 AssignTrucksToDocks();
 
@@ -147,22 +146,52 @@ namespace WarehouseSimulation
                 {
                     break; // No more docks available or they are all full
                 }
-                int currentLongestLine = docks.Max(d => d.line.Count);
-                if (currentLongestLine > longestLineEver)
-                {
-                    longestLineEver = currentLongestLine;
-                }
             }
         }
 
-        // TBD ==> this method will be modified to include seperate binomial dist
-        // function and generate approriate truck absed on the time of day then queue
-        // them up at entrance.
-        public void HandleTruckArrivals()
+        /// <summary>
+        /// Generates a truck based on the time of day and the chance associated
+        /// with that time of day.
+        /// </summary>
+        /// <param name="incremement">Time increment int</param>
+        public void HandleTruckArrivals(int incremement)
         {
-            
-            Truck truck = new Truck();
-            entrance.Enqueue(truck);
+            Random random = new Random();
+            bool isBusy = GetBusy(incremement);
+
+            int chance = random.Next(1, 10);
+
+            if (isBusy && chance > 3)
+            {
+                Truck truck = new Truck();
+                entrance.Enqueue(truck);
+            }
+            else if (!isBusy && chance <= 3)
+            {
+                Truck truck = new Truck();
+                entrance.Enqueue(truck);
+            }
+
+        }
+
+        /// <summary>
+        /// Determine whether or not it is a busy time of day based on
+        /// time increment.
+        /// </summary>
+        /// <param name="increment">Time increment</param>
+        /// <returns>If it is busy or not - bool</returns>
+        public bool GetBusy(int increment)
+        {
+            bool isBusy = false;
+            if(increment >= 6 && increment <= 12)
+            {
+                isBusy = true;
+            }
+            else if(increment >= 24 && increment <= 40)
+            {
+                isBusy = true;
+            }
+            return isBusy;
         }
 
 
@@ -172,7 +201,14 @@ namespace WarehouseSimulation
         /// <returns>if the warehouse is empty - bool</returns>
         public bool GetIsWarehouseEmpty()
         {
-            return docks.All(dock => dock.line.Count == 0) && entrance.Count == 0;
+            // using all method to itterate over each dock
+            bool areAllDocksEmpty = docks.All(dock => dock.line.Count == 0);
+
+            bool isEntranceEmpty = entrance.Count == 0;
+
+            bool result = areAllDocksEmpty && isEntranceEmpty;
+
+            return result;
         }
 
         /// <summary>
@@ -199,36 +235,77 @@ namespace WarehouseSimulation
             //Calculate the longest line at any loading dock
             int longestLine = docks.Max(d => d.line.Count);
 
-            //Print out the report
-            Console.WriteLine("------ Warehouse Simulation Report-------");
-            Console.WriteLine($"Number of docks open: {docks.Count}");
-            Console.WriteLine($"Longest line at any dock: {longestLine}");
-            Console.WriteLine($"Total number of trucks processed: {totalTrucksProcessed}");
-            Console.WriteLine($"Total number of crates unloaded: {totalCratesUnloaded}");
-            Console.WriteLine($"Total value of unloaded crates: ${totalValueOfCrates}");
-            Console.WriteLine($"Average value of each crate: ${averageCrateValue}");
-            Console.WriteLine($"Average value of each truck: ${averageValuePerTruck}");
-            Console.WriteLine($"Total time docks were in use: {totalDockTimeInUse} time increments");
-            Console.WriteLine($"Total time docks were not in use: {totalDockTimeNotInUse} time increments");
-            Console.WriteLine($"Average dock usage time: {averageDockUsageTime} time increments");
-            Console.WriteLine($"Total cost of operating docks: ${totalCostOfOperatingDocks}");
-            Console.WriteLine($"Total revenue: ${totalRevenue}");
-            Console.WriteLine("-----------------------------------------");
+            //Print out the report to console
+            //Console.WriteLine("------ Warehouse Simulation Report-------");
+            //Console.WriteLine($"Number of docks open: {docks.Count}");
+            //Console.WriteLine($"Longest line at any dock: {longestLine}");
+            //Console.WriteLine($"Total number of trucks processed: {totalTrucksProcessed}");
+            //Console.WriteLine($"Total number of crates unloaded: {totalCratesUnloaded}");
+            //Console.WriteLine($"Total value of unloaded crates: ${totalValueOfCrates}");
+            //Console.WriteLine($"Average value of each crate: ${averageCrateValue}");
+            //Console.WriteLine($"Average value of each truck: ${averageValuePerTruck}");
+            //Console.WriteLine($"Total time docks were in use: {totalDockTimeInUse} time increments");
+            //Console.WriteLine($"Total time docks were not in use: {totalDockTimeNotInUse} time increments");
+            //Console.WriteLine($"Average dock usage time: {averageDockUsageTime} time increments");
+            //Console.WriteLine($"Total cost of operating docks: ${totalCostOfOperatingDocks}");
+            //Console.WriteLine($"Total revenue: ${totalRevenue}");
+            //Console.WriteLine($"Net Revenue: ${totalRevenue - totalCostOfOperatingDocks}");
+            //Console.WriteLine("-----------------------------------------");
 
-            //Print out logs in a tabular format
-            Console.WriteLine("------------------------------- Crate Unloading Logs ------------------------------------");
-            Console.WriteLine("{0,-8} | {1,-15} | {2,-16} | {3,-10} | {4,-9} | {5}",
-                              "Time", "Driver", "Delivery Company", "Crate ID", "Crate Value", "Scenario");
-            Console.WriteLine(new string('-', 95)); // Adjust the number of '-' to match the header's width.
+            //Print out logs in a tabular format to console
+            //Console.WriteLine("------------------------------- Crate Unloading Logs ------------------------------------");
+            //Console.WriteLine("{0,-8} | {1,-15} | {2,-16} | {3,-10} | {4,-9} | {5}",
+            //                  "Time", "Driver", "Delivery Company", "Crate ID", "Crate Value", "Scenario");
+            //Console.WriteLine(new string('-', 95)); // Adjust the number of '-' to match the header's width.
 
-            foreach (string log in logs)
+            //foreach (string log in logs)
+            //{
+            //    // We will assume that log is a plain string formatted similarly to what was provided previously
+            //    Console.WriteLine(log);
+            //}
+
+            //Console.WriteLine("-------------------------------------------------------------------------------");
+
+            //Start file printing
+            string reportFileName = "WarehouseSimulationAggregatedReport.csv";
+            string logsFileName = "WarehouseSimulationLogs.csv";
+
+            // Print to the report file
+            using (StreamWriter swReport = new StreamWriter(reportFileName))
             {
-                // We will assume that log is a plain string formatted similarly to what was provided previously
-                Console.WriteLine(log);
+                swReport.WriteLine("Metric,Value");
+
+                swReport.WriteLine($"Number of docks open,{docks.Count}");
+                swReport.WriteLine($"Longest line at any dock,{longestLine}");
+                swReport.WriteLine($"Total number of trucks processed,{totalTrucksProcessed}");
+                swReport.WriteLine($"Total number of crates unloaded,{totalCratesUnloaded}");
+                swReport.WriteLine($"Total value of unloaded crates,{totalValueOfCrates}");
+                swReport.WriteLine($"Average value of each crate,{averageCrateValue}");
+                swReport.WriteLine($"Average value of each truck,{averageValuePerTruck}");
+                swReport.WriteLine($"Total time docks were in use,{totalDockTimeInUse} time increments");
+                swReport.WriteLine($"Total time docks were not in use,{totalDockTimeNotInUse} time increments");
+                swReport.WriteLine($"Average dock usage time,{averageDockUsageTime} time increments");
+                swReport.WriteLine($"Total cost of operating docks,{totalCostOfOperatingDocks}");
+                swReport.WriteLine($"Total revenue,{totalRevenue}");
+                swReport.WriteLine($"Net Revenue: ${totalRevenue - totalCostOfOperatingDocks}");
             }
 
-            Console.WriteLine("-------------------------------------------------------------------------------");
+            // Print to the log file
+            using (StreamWriter swLogs = new StreamWriter(logsFileName))
+            {
+                // Titles for the file
+                swLogs.WriteLine("Time,Driver,Delivery Company,Crate ID,Crate Value,Scenario");
 
+                // Write the info to the logs
+                foreach (string log in logs)
+                {
+                    // Replace the bars with commas for file
+                    swLogs.WriteLine(log.Replace("|", ","));
+                }
+            }
+
+            Console.WriteLine($"Report written to {reportFileName}");
+            Console.WriteLine($"Logs written to {logsFileName}");
         }
     }
 }
