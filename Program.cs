@@ -1,6 +1,6 @@
 ﻿///////////////////////////////////////////////////////////////////////////////
 //																			 	
-// Authors: Justin Gun, GUNJC@etsu.edu										 
+// Authors: Jason Gun, GUNJC1@etsu.edu										 
 //			Dustin Sway, ZDCS16@etsu.edu									 
 //			Chris Powers, powersct@etsu.edu									 
 // Course: CSCI-2210-001 - Data Structures									 
