@@ -157,11 +157,11 @@ namespace WarehouseSimulation
         public void HandleTruckArrivals(int incremement)
         {
             Random random = new Random();
-            bool isBusy = GetBusy(incremement);
+            bool isBusyPartOfDay = GetIsBusyPartOfDay(incremement);
 
             int chance = random.Next(1, 10);
 
-            switch (isBusy)
+            switch (isBusyPartOfDay)
             {
                 case true:
                     //Creating 70% chance of truck arriving during busy part of day.
@@ -189,7 +189,7 @@ namespace WarehouseSimulation
         /// </summary>
         /// <param name="increment">Time increment</param>
         /// <returns>If it is busy or not - bool</returns>
-        public bool GetBusy(int increment)
+        public bool GetIsBusyPartOfDay(int increment)
         {
             bool isBusy = false;
             if(increment >= 6 && increment <= 12)
