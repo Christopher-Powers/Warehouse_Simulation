@@ -16,7 +16,7 @@ namespace WarehouseSimulation
         Queue<Truck> entrance;
         private List<string> logs;
         private const int SIMULATIONTIME = 48;
-        private const int MAXDOCKS = 2;
+        private const int MAXDOCKS = 7;
         private bool isWarehouseEmpty;
 
         /// <summary>
@@ -161,15 +161,24 @@ namespace WarehouseSimulation
 
             int chance = random.Next(1, 10);
 
-            if (isBusy && chance > 3)
+            switch (isBusy)
             {
-                Truck truck = new Truck();
-                entrance.Enqueue(truck);
-            }
-            else if (!isBusy && chance <= 3)
-            {
-                Truck truck = new Truck();
-                entrance.Enqueue(truck);
+                case true:
+                    //Creating 70% chance of truck arriving during busy part of day.
+                    if(chance > 3)
+                    {
+                        Truck truck = new Truck();
+                        entrance.Enqueue(truck);
+                    }
+                    break;
+                case false:
+                    //Creating 30% chance of truck coming during slower part of day.
+                    if(chance <= 3) 
+                    {
+                        Truck truck = new Truck();
+                        entrance.Enqueue(truck);
+                    }
+                    break;
             }
 
         }
@@ -236,21 +245,21 @@ namespace WarehouseSimulation
             int longestLine = docks.Max(d => d.line.Count);
 
             //Print out the report to console
-            //Console.WriteLine("------ Warehouse Simulation Report-------");
-            //Console.WriteLine($"Number of docks open: {docks.Count}");
-            //Console.WriteLine($"Longest line at any dock: {longestLine}");
-            //Console.WriteLine($"Total number of trucks processed: {totalTrucksProcessed}");
-            //Console.WriteLine($"Total number of crates unloaded: {totalCratesUnloaded}");
-            //Console.WriteLine($"Total value of unloaded crates: ${totalValueOfCrates}");
-            //Console.WriteLine($"Average value of each crate: ${averageCrateValue}");
-            //Console.WriteLine($"Average value of each truck: ${averageValuePerTruck}");
-            //Console.WriteLine($"Total time docks were in use: {totalDockTimeInUse} time increments");
-            //Console.WriteLine($"Total time docks were not in use: {totalDockTimeNotInUse} time increments");
-            //Console.WriteLine($"Average dock usage time: {averageDockUsageTime} time increments");
-            //Console.WriteLine($"Total cost of operating docks: ${totalCostOfOperatingDocks}");
-            //Console.WriteLine($"Total revenue: ${totalRevenue}");
-            //Console.WriteLine($"Net Revenue: ${totalRevenue - totalCostOfOperatingDocks}");
-            //Console.WriteLine("-----------------------------------------");
+            Console.WriteLine("------ Warehouse Simulation Report-------");
+            Console.WriteLine($"Number of docks open: {docks.Count}");
+            Console.WriteLine($"Longest line at any dock: {longestLine}");
+            Console.WriteLine($"Total number of trucks processed: {totalTrucksProcessed}");
+            Console.WriteLine($"Total number of crates unloaded: {totalCratesUnloaded}");
+            Console.WriteLine($"Total value of unloaded crates: ${totalValueOfCrates}");
+            Console.WriteLine($"Average value of each crate: ${averageCrateValue}");
+            Console.WriteLine($"Average value of each truck: ${averageValuePerTruck}");
+            Console.WriteLine($"Total time docks were in use: {totalDockTimeInUse} time increments");
+            Console.WriteLine($"Total time docks were not in use: {totalDockTimeNotInUse} time increments");
+            Console.WriteLine($"Average dock usage time: {averageDockUsageTime} time increments");
+            Console.WriteLine($"Total cost of operating docks: ${totalCostOfOperatingDocks}");
+            Console.WriteLine($"Total revenue: ${totalRevenue}");
+            Console.WriteLine($"Net Revenue: ${totalRevenue - totalCostOfOperatingDocks}");
+            Console.WriteLine("-----------------------------------------");
 
             //Print out logs in a tabular format to console
             //Console.WriteLine("------------------------------- Crate Unloading Logs ------------------------------------");

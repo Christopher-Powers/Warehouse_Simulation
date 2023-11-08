@@ -23,13 +23,10 @@ namespace WarehouseSimulation
         static void Main()
         {
             //=========TODO===============
-            //1) Modify HandleTruckArrivals() to account for binomially
-            //   distributed trucks
-            //2) Test various efficencies by change MAXDOCKS const
-            //3) Write brief recommendation based on findings
-            //4) Modify GenerateReport() to print to external file
-            //5) Spot check
-            //6) Submit
+
+            //1) Write brief recommendation based on findings
+            //2) Spot check
+            //3) Submit
 
             Warehouse warehouse = new Warehouse();
             warehouse.Run();
