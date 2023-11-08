@@ -157,11 +157,11 @@ namespace WarehouseSimulation
         public void HandleTruckArrivals(int incremement)
         {
             Random random = new Random();
-            bool isBusyPartOfDay = GetIsBusyPartOfDay(incremement);
+            bool isBusy = GetBusy(incremement);
 
             int chance = random.Next(1, 10);
 
-            switch (isBusyPartOfDay)
+            switch (isBusy)
             {
                 case true:
                     //Creating 70% chance of truck arriving during busy part of day.
@@ -189,7 +189,7 @@ namespace WarehouseSimulation
         /// </summary>
         /// <param name="increment">Time increment</param>
         /// <returns>If it is busy or not - bool</returns>
-        public bool GetIsBusyPartOfDay(int increment)
+        public bool GetBusy(int increment)
         {
             bool isBusy = false;
             if(increment >= 6 && increment <= 12)
@@ -262,18 +262,18 @@ namespace WarehouseSimulation
             Console.WriteLine("-----------------------------------------");
 
             //Print out logs in a tabular format to console
-            //Console.WriteLine("------------------------------- Crate Unloading Logs ------------------------------------");
-            //Console.WriteLine("{0,-8} | {1,-15} | {2,-16} | {3,-10} | {4,-9} | {5}",
-            //                  "Time", "Driver", "Delivery Company", "Crate ID", "Crate Value", "Scenario");
-            //Console.WriteLine(new string('-', 95)); // Adjust the number of '-' to match the header's width.
+            Console.WriteLine("------------------------------- Crate Unloading Logs ------------------------------------");
+            Console.WriteLine("{0,-8} | {1,-15} | {2,-16} | {3,-10} | {4,-9} | {5}",
+                              "Time", "Driver", "Delivery Company", "Crate ID", "Crate Value", "Scenario");
+            Console.WriteLine(new string('-', 95)); // Adjust the number of '-' to match the header's width.
 
-            //foreach (string log in logs)
-            //{
-            //    // We will assume that log is a plain string formatted similarly to what was provided previously
-            //    Console.WriteLine(log);
-            //}
+            foreach (string log in logs)
+            {
+                // We will assume that log is a plain string formatted similarly to what was provided previously
+                Console.WriteLine(log);
+            }
 
-            //Console.WriteLine("-------------------------------------------------------------------------------");
+            Console.WriteLine("-------------------------------------------------------------------------------");
 
             //Start file printing
             string reportFileName = "WarehouseSimulationAggregatedReport.csv";
