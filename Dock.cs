@@ -19,7 +19,7 @@ namespace WarehouseSimulation
         public Queue<Truck> line;
 
         /// <summary>
-        /// Dock constructor to initializes all properties to a zero or null value
+        /// Dock default constructor to initializes most properties to a zero or null value
         /// to be determined in Warehouse.
         /// </summary>
         public Dock()
@@ -46,7 +46,7 @@ namespace WarehouseSimulation
         /// Removes truck from the front of the line queue.
         /// </summary>
         /// <returns>Truck object dequeued</returns>
-        public Truck SendOff()
+        public Truck? SendOff()
         {
             if (line.Count > 0)
             {
@@ -59,11 +59,9 @@ namespace WarehouseSimulation
         /// Gets a unique ID for the Dock
         /// </summary>
         /// <returns>Unique ID string</returns>
-        public string GetUniqueId()
+        public static string GetUniqueId()
         {
-            string uniqueId = Guid.NewGuid().ToString("N");
-            string shortendId = uniqueId.Substring(0, 5).ToUpper();
-            return shortendId;
+            return Guid.NewGuid().ToString("N").Substring(0, 5).ToUpper(); ;
         }
 
         /// <summary>

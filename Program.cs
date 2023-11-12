@@ -22,15 +22,8 @@ namespace WarehouseSimulation
         /// </summary>
         static void Main()
         {
-            //=========TODO===============
-
-            //1) Write brief recommendation based on findings
-            //2) Spot check
-            //3) Submit
-
             Warehouse warehouse = new Warehouse();
             warehouse.Run();
-            Console.ReadLine();
         }
     }
 }

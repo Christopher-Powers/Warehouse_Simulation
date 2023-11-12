@@ -6,7 +6,7 @@ namespace WarehouseSimulation
     /// </summary>
     internal class Crate
     {
-        public string? Id { get; set; }
+        public string Id { get; set; }
         public double price { get; set; }
         public int incrimentWhenUnloaded { get; set; }
 
@@ -41,9 +41,7 @@ namespace WarehouseSimulation
         /// <returns>Unique Id</returns>
         public string GetUniqueId()
         {
-            string uniqueId = Guid.NewGuid().ToString("N");
-            string shortendId = uniqueId.Substring(0, 8).ToUpper();
-            return shortendId;
+            return Guid.NewGuid().ToString("N").Substring(0, 8).ToUpper();
         }
 
         /// <summary>

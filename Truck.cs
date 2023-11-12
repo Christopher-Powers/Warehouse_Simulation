@@ -8,8 +8,8 @@ namespace WarehouseSimulation
     /// </summary>
     internal class Truck
     {
-        public string? driverName {  get; set; }
-        public string? deliveryCompany {  get; set; }
+        public string driverName {  get; set; }
+        public string deliveryCompany {  get; set; }
 
         public Stack<Crate> trailer = new Stack<Crate>();
 
@@ -108,9 +108,7 @@ namespace WarehouseSimulation
         /// <returns>Crate popped off</returns>
         public Crate Unload()
         {
-            Crate unloadedCrate = trailer.Pop();
-
-            return unloadedCrate;
+            return trailer.Pop();
         }
 
         public override string ToString()
